@@ -1,3 +1,6 @@
 [submodule "pkg/auto-complete"]
 	path = pkg/auto-complete
 	url = https://github.com/auto-complete/auto-complete.git
+[submodule "pkg/go-mode.el"]
+	path = pkg/go-mode.el
+	url = https://github.com/dominikh/go-mode.el.git

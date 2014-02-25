@@ -26,7 +26,7 @@
 (setq backup-inhibited t)
 
 ; Theme configuration
-(load-theme 'wombat)
+(load-theme 'tango-dark)
 (set-face-attribute 'default nil :height 90)
 (set-face-attribute 'default nil :weight 'bold)
 
@@ -39,9 +39,12 @@
 (add-to-list 'load-path "~/.emacs.d/pkg/auto-complete/lib/fuzzy")
 (add-to-list 'load-path "~/.emacs.d/pkg/auto-complete/lib/popup")
 (require 'auto-complete)
+(require 'auto-complete-config)
+(ac-config-default)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ext/auto-complete/dict")
-(global-auto-complete-mode t)
-(setq-default ac-sources '(ac-source-words-in-same-mode-buffers ac-source-filename))
+
+(add-to-list 'load-path "~/.emacs.d/pkg/go-mode.el")
+(require 'go-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;                     Custom Functions                       ;;;;;;;;;;
