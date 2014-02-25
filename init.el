@@ -29,3 +29,16 @@
 (load-theme 'wombat)
 (set-face-attribute 'default nil :height 90)
 (set-face-attribute 'default nil :weight 'bold)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;                   Package Configuration                    ;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-to-list 'load-path "~/.emacs.d/pkg/auto-complete")
+(add-to-list 'load-path "~/.emacs.d/pkg/auto-complete/lib/ert")
+(add-to-list 'load-path "~/.emacs.d/pkg/auto-complete/lib/fuzzy")
+(add-to-list 'load-path "~/.emacs.d/pkg/auto-complete/lib/popup")
+(require 'auto-complete)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ext/auto-complete/dict")
+(global-auto-complete-mode t)
+(setq-default ac-sources '(ac-source-words-in-same-mode-buffers ac-source-filename))
