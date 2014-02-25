@@ -42,3 +42,16 @@
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ext/auto-complete/dict")
 (global-auto-complete-mode t)
 (setq-default ac-sources '(ac-source-words-in-same-mode-buffers ac-source-filename))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;                     Custom Functions                       ;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Json-Format
+(defun json-format()
+  (interactive)
+  (save-excursion
+    (shell-command-on-region
+     (mark) (point)
+     "python -m json.tool"
+     (buffer-name) t)))
