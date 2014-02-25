@@ -46,6 +46,9 @@
 (add-to-list 'load-path "~/.emacs.d/pkg/go-mode.el")
 (require 'go-mode)
 
+(add-to-list 'load-path "~/.emacs.d/pkg/go-autocomplete")
+(require 'go-autocomplete)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;                     Custom Functions                       ;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
