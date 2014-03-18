@@ -4,3 +4,6 @@
 [submodule "pkg/go-mode.el"]
 	path = pkg/go-mode.el
 	url = https://github.com/dominikh/go-mode.el.git
+[submodule "pkg/lua-mode"]
+	path = pkg/lua-mode
+	url = https://github.com/immerrr/lua-mode.git
