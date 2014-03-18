@@ -11,7 +11,8 @@
 (setq indent-line-function 'insert-tab)
 
 ; Disable tool bar
-(tool-bar-mode -1)
+(if (functionp 'tool-bar-mode)
+    (tool-bar-mode -1))
 
 ; Display Column Numbers
 (column-number-mode t)
