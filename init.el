@@ -14,7 +14,7 @@
 (if (functionp 'tool-bar-mode)
     (tool-bar-mode -1))
 
-; Display Column Numbers
+; Display column numbers
 (column-number-mode t)
 
 ; Disable auto save
@@ -26,44 +26,69 @@
 ; Disable backup
 (setq backup-inhibited t)
 
-; Theme configuration
-(load-theme 'tango-dark)
-(set-face-attribute 'default nil :height 90)
-(set-face-attribute 'default nil :weight 'bold)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;                   Package Configuration                    ;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(add-to-list 'load-path "~/.emacs.d/pkg/auto-complete")
-(add-to-list 'load-path "~/.emacs.d/pkg/auto-complete/lib/ert")
-(add-to-list 'load-path "~/.emacs.d/pkg/auto-complete/lib/fuzzy")
-(add-to-list 'load-path "~/.emacs.d/pkg/auto-complete/lib/popup")
-(require 'auto-complete)
-(require 'auto-complete-config)
-(ac-config-default)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/ext/auto-complete/dict")
-
-(add-to-list 'load-path "~/.emacs.d/pkg/go-mode.el")
-(require 'go-mode)
-
-(add-to-list 'load-path "~/.emacs.d/pkg/go-autocomplete")
-(require 'go-autocomplete)
-
-(add-to-list 'load-path "~/.emacs.d/pkg/lua-mode")
-(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
-(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
-(add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file 'noerror)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;                     Custom Functions                       ;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-; Json-Format
-(defun json-format()
+(defun json-format() 
   (interactive)
   (save-excursion
     (shell-command-on-region
      (mark) (point)
-     "python -m json.tool"
+     "jq '.'"
      (buffer-name) t)))
+
+(global-set-key "\C-cj" 'json-format)
+(global-set-key "\C-cl" 'linum-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;                   Package Configuration                    ;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(require 'package)
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.org/packages/"))
+
+(defvar pkgs '(
+	       auto-complete
+	       go-autocomplete
+	       go-eldoc
+	       go-mode
+           go-snippets
+           yasnippet
+	       zenburn-theme))
+
+(defun pkg-update ()
+  (interactive)
+  (message "%s" "updating/installing packages")
+  (package-refresh-contents)
+  (dolist (p pkgs)
+    (when (not (package-installed-p p))
+      (package-install p)))
+  (message "%s" "done updating/installing packages"))
+
+(with-eval-after-load "auto-complete-autoloads"
+  (message "%s" "loaded autocomplete-autoloads")
+  (ac-config-default))
+
+(with-eval-after-load "zenburn-theme-autoloads"
+  (load-theme 'zenburn))
+
+(with-eval-after-load "yasnippet-autoloads"
+  (setq yas-verbosity 1)
+  (yas-global-mode))
+
+(with-eval-after-load "go-autocomplete-autoloads"
+  (require 'go-autocomplete))
+
+(add-hook 'go-mode-hook (lambda()
+			  (setq gofmt-command "goimports")
+			  (add-hook 'before-save-hook 'gofmt-before-save)
+			  (go-eldoc-setup)))
+
+
+
+(package-initialize)
